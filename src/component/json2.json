@@ -1,0 +1,47 @@
+[
+    {
+        "pid": "1",
+        "mid": "1",
+        "permission": "Create"
+    },
+    {
+        "pid": "2",
+        "mid": "1",
+        "permission": "Update"
+    },
+    {
+        "pid": "3",
+        "mid": "1",
+        "permission": "Delete"
+    },
+    {
+        "pid": "4",
+        "mid": "1",
+        "permission": "Display"
+    },
+    {
+        "pid": "5",
+        "mid": "2",
+        "permission": "Create"
+    },
+    {
+        "pid": "6",
+        "mid": "2",
+        "permission": "Update"
+    },
+    {
+        "pid": "7",
+        "mid": "2",
+        "permission": "Delete"
+    },
+    {
+        "pid": "8",
+        "mid": "2",
+        "permission": "Display"
+    },
+    {
+        "pid": "9",
+        "mid": "2",
+        "permission": "Search"
+    }
+]

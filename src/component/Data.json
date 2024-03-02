@@ -1,0 +1,73 @@
+[
+
+    {
+
+        "sno": 1,
+
+        "countname": "dutyhrs",
+
+        "cnt": 91.00
+
+    },
+
+    {
+
+        "sno": 2,
+
+        "countname": "eventhrs",
+
+        "cnt": 6.00
+
+    },
+
+    {
+
+        "sno": 3,
+
+        "countname": "traininghrs",
+
+        "cnt": 6.00
+
+    },
+
+    {
+
+        "sno": 4,
+
+        "countname": "hrs",
+
+        "cnt": 80.00
+
+    },
+
+    {
+
+        "sno": 5,
+
+        "countname": "othrs",
+
+        "cnt": 15.00
+
+    },
+
+    {
+
+        "sno": 6,
+
+        "countname": "vacationhrs",
+
+        "cnt": 8.00
+
+    },
+
+    {
+
+        "sno": 7,
+
+        "countname": "totalhrs",
+
+        "cnt": 103.00
+
+    }
+
+]
