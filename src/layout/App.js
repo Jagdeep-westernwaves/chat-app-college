@@ -3,11 +3,9 @@ import "../customcss/App.css";
 import { Route, Switch } from "react-router-dom";
 import Menus from "./menu";
 import Home from "./Home";
-import Contact from "../container/Small Component/Contact";
 import CatProduct from "../container/Product/CatProduct";
 import Error from "./Error";
 import User from "../container/User/User";
-import About from "../container/Small Component/About";
 import Register from "../container/Login/Register";
 import File from "../container/Login/login";
 import Uprofile from "../container/User/Uprofile";
@@ -18,22 +16,18 @@ import io from "socket.io-client";
 import axios from "axios";
 import Chat from "../container/User/Chat/Chat";
 const jwt = require("jsonwebtoken");
+const SERVER_URL = "http://localhost:9000"; // Replace with your server URL
 
 const App = () => {
   useEffect(() => {
-    const socket = io("http://localhost:9000/");
-    console.log("✌️socket --->", socket);
-    // const socket = io();
-    // listen for events emitted by the server
-
-    socket.on("connection", () => {
-      console.log("Connected to server");
+    const socket = io(SERVER_URL);
+    // Listen for "hello" message from server
+    socket.on("hello", (message) => {
+      console.log("✌️message --->", message);
     });
 
     return () => {
-      if (socket) {
-        socket.disconnect();
-      }
+      socket.disconnect();
     };
   }, []);
   useEffect(() => {
