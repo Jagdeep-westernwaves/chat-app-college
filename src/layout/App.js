@@ -14,11 +14,28 @@ import Uprofile from "../container/User/Uprofile";
 import Profilepage from "../container/User/Forgetpswd";
 import SearchPenal from "../container/User/SearchPenal";
 import Profile from "../container/User/Profile";
+import io from "socket.io-client";
 import axios from "axios";
 import Chat from "../container/User/Chat/Chat";
 const jwt = require("jsonwebtoken");
 
-function App() {
+const App = () => {
+  useEffect(() => {
+    const socket = io("http://localhost:9000/");
+    console.log("✌️socket --->", socket);
+    // const socket = io();
+    // listen for events emitted by the server
+
+    socket.on("connection", () => {
+      console.log("Connected to server");
+    });
+
+    return () => {
+      if (socket) {
+        socket.disconnect();
+      }
+    };
+  }, []);
   useEffect(() => {
     localStorage.setItem("current", "Home");
   }, []);
@@ -79,6 +96,6 @@ function App() {
       )}
     </>
   );
-}
+};
 
 export default App;
