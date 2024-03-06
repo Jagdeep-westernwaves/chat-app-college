@@ -149,7 +149,7 @@ img {
   overflow-y: auto;
 }
 .newScroll:hover {
-  overflow-x: hidden;
+  overflow-x: auto;
 }
 
 .force-overflow {

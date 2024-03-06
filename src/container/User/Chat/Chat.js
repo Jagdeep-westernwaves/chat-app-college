@@ -5,10 +5,14 @@ import { capitalize, map, toNumber } from "lodash";
 import React, { useEffect, useState } from "react";
 import { FcLeft } from "react-icons/fc";
 import { ChartForm } from "../../../Style/Style";
+import { io } from "socket.io-client";
+const SERVER_URL = "http://localhost:9000"; // Replace with your server URL
 
 const Chat = () => {
+  const socket = io(SERVER_URL);
   const [state, setState] = useState();
   const onFinish = (values) => {
+    const socket = io(SERVER_URL);
     axios
       .post("http://localhost:9000/sendMsg", {
         lid: localStorage.getItem("lid"),
@@ -17,16 +21,28 @@ const Chat = () => {
       })
       .then((res) => {
         setState(res.data);
+        socket.emit("send_msg")
+        
       });
     form.resetFields();
-    console.log("Success:", values);
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
   useEffect(() => {
-    const chatRefresher = setInterval(() => {
+    // Listen for "hello" message from server
+  const socket = io(SERVER_URL);
+  axios
+    .post("http://localhost:9000/hndleMsg", {
+      lid: localStorage.getItem("lid"),
+      fid: localStorage.getItem("fidOfChat"),
+    })
+    .then((res) => {
+      setState(res.data);
+    });
+    socket.on("recieve_msg", () => {
       axios
         .post("http://localhost:9000/hndleMsg", {
           lid: localStorage.getItem("lid"),
@@ -35,10 +51,22 @@ const Chat = () => {
         .then((res) => {
           setState(res.data);
         });
-    }, 800);
+    });
+  }, []);
+  useEffect(() => {
+    // const chatRefresher = setInterval(() => {
+    //   axios
+    //     .post("http://localhost:9000/hndleMsg", {
+    //       lid: localStorage.getItem("lid"),
+    //       fid: localStorage.getItem("fidOfChat"),
+    //     })
+    //     .then((res) => {
+    //       setState(res.data);
+    //     });
+    // }, 800);
 
     return () => {
-      clearInterval(chatRefresher);
+      // clearInterval(chatRefresher);
       localStorage.removeItem("fidOfChat");
       localStorage.removeItem("nameOfFriend");
       localStorage.removeItem("uname");
@@ -66,12 +94,10 @@ const Chat = () => {
           </h2>
         </Row>{" "}
       </>
-      <div className="scrollbar newScroll" id="style-1">
-        {" "}
+      <div className="scrollbar newScroll" id="chat-box-container">
         {map(state, (item) => {
           return (
             <>
-              {" "}
               {item.sId !== toNumber(localStorage.getItem("lid")) ? (
                 <div
                   style={{
@@ -79,7 +105,7 @@ const Chat = () => {
                     background: "#ffffff",
                     margin: "2px 10px",
                     padding: "6px 10px",
-                    maxWidth: "550px",
+                    maxWidth: "350px",
                     width: "auto",
                     borderRadius: "0px 10px 10px 10px",
                   }}
@@ -93,7 +119,7 @@ const Chat = () => {
                     margin: "2px 10px",
                     padding: "6px 10px",
                     maxWidth: "100%",
-                    width: "550px",
+                    width: "350px",
                     borderRadius: "0px 10px 10px 10px",
                     marginLeft: "140px",
                   }}

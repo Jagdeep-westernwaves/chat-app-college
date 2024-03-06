@@ -893,8 +893,8 @@ export const ChartForm = styled.div`
     url("/wap.jpg");
   overflow: hidden;
   padding: 0px 0px 15px 0px;
-  max-width: 700px;
-  width: 700px;
+  max-width: 520px;
+  width: 520px;
   width: 100%;
   display: flex;
   flex-direction: column;
