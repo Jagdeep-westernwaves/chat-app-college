@@ -37,10 +37,8 @@ const PostPost = () => {
   const [userdetail, setUserdetail] = useState([]);
   const normFile = async ({ file, fileList }) => {
     setDefaultFileList(file);
-    if (fileList !== []) {
-      const postImages = await getBase64(fileList[0].originFileObj);
-      setpostImage(postImages);
-    }
+    const postImages = await getBase64(fileList[0].originFileObj);
+    setpostImage(postImages);
   };
   // const normVideo = async ({ file, fileList }) => {
   //   console.log(file, "file");

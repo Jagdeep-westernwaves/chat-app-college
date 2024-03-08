@@ -29,16 +29,23 @@ const Menus = () => {
   return (
     <>
       <Row>
-        <Col span={17} style={{paddingTop:"10px",paddingLeft:10}}>
-        <Link to="/" >  <Image
+        <Col span={17} style={{ paddingTop: "10px", paddingLeft: 10 }}>
+          <Link to="/">
+            {" "}
+            <Image
               width={200}
               preview={false}
-              style={{display:"flex"}}
+              style={{ display: "flex" }}
               src="/logo512.png"
-            /></Link>  
-             <Menu style={{display:"flex"}} onClick={handleClick} selectedKeys={current} mode="horizontal">
-        
-            <Menu.Item  key="Home">
+            />
+          </Link>
+          <Menu
+            style={{ display: "flex" }}
+            onClick={handleClick}
+            selectedKeys={current}
+            mode="horizontal"
+          >
+            <Menu.Item key="Home">
               <NavLink to="/">Home</NavLink>
             </Menu.Item>
             {/* <Menu.Item key="About">
@@ -56,7 +63,7 @@ const Menus = () => {
               </Menu.Item>
             ) : (
               <Menu.Item key="Login">
-                <NavLink to={`/login`}>Log In</NavLink>
+                <NavLink to={`/`}>Log In</NavLink>
               </Menu.Item>
             )}
           </Menu>
@@ -75,7 +82,7 @@ const Menus = () => {
                   <NavLink to={`/profile`}>Profile</NavLink>
                 </Menu.Item>
                 <Menu.Item key="Logout">
-                  <NavLink to={`/login`} onClick={logout}>
+                  <NavLink to={`/`} onClick={logout}>
                     Log Out
                   </NavLink>
                 </Menu.Item>

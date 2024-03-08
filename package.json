@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@material-ui/core": "^4.12.4",
     "@mui/icons-material": "^5.15.11",
     "@mui/material": "^5.15.11",
@@ -26,7 +27,6 @@
     "react-redux": "^9.1.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.3",
     "react-tooltip": "^5.26.3",
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
@@ -34,14 +34,16 @@
     "styled-components": "^5.2.3",
     "typescript": "^4.7.3",
     "uninstall": "^0.0.0",
+    "vite-plugin-environment": "^1.1.3",
     "web-vitals": "^1.1.1",
     "yup": "^1.3.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "vite",
+    "build": "vite build",
+    "test": "vite test",
+    "eject": "vite eject",
+    "serve": "vite preview"
   },
   "eslintConfig": {
     "extends": [
@@ -62,6 +64,23 @@
     ]
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.182"
-  }
+    "@types/lodash": "^4.14.182",
+    "@vitejs/plugin-react": "^4.2.1",
+    "@vitejs/plugin-react-refresh": "^1.3.6",
+    "vite": "^5.1.5",
+    "vite-plugin-svgr": "^4.2.0"
+  },
+  "description": "college project - in react js and node js using My sql as db",
+  "main": "vite.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jagdeep-westernwaves/chat-app-college.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jagdeep-westernwaves/chat-app-college/issues"
+  },
+  "homepage": "https://github.com/Jagdeep-westernwaves/chat-app-college#readme"
 }
