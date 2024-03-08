@@ -46,7 +46,7 @@ const Calander = () => {
         `http://localhost:9000/event`,
 
         {
-          uid: sessionStorage.getItem("demo"),
+          uid: localStorage.getItem("demo"),
           edate: values.edate,
           remarks: values.remarks,
           name: values.name,

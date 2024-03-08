@@ -6,10 +6,10 @@ const { SubMenu } = Menu;
 const Menus = () => {
   const [current, setcurrent] = useState(localStorage.getItem("current"));
 
-  const [uname, setUname] = useState(sessionStorage.getItem("demo"));
+  const [uname, setUname] = useState(localStorage.getItem("demo"));
 
   useEffect(() => {
-    setUname(sessionStorage.getItem("demo"));
+    setUname(localStorage.getItem("demo"));
   }, []);
 
   const history = useHistory();
@@ -20,7 +20,7 @@ const Menus = () => {
   };
 
   const logout = () => {
-    sessionStorage.removeItem("demo");
+    localStorage.removeItem("demo");
     localStorage.removeItem("jwt");
     localStorage.removeItem("refjwt");
     history.push("/");
@@ -57,7 +57,7 @@ const Menus = () => {
             <Menu.Item key="Contact">
               <NavLink to="/contact">Contact Us</NavLink>
             </Menu.Item> */}
-            {sessionStorage.getItem("demo") ? (
+            {localStorage.getItem("demo") ? (
               <Menu.Item key="Friends">
                 <NavLink to={`/friends`}>Friends</NavLink>
               </Menu.Item>
@@ -76,7 +76,7 @@ const Menus = () => {
             selectedKeys={current}
             mode="horizontal"
           >
-            {sessionStorage.getItem("demo") ? (
+            {localStorage.getItem("demo") ? (
               <SubMenu key="SubMenu" title={uname}>
                 <Menu.Item key="profile">
                   <NavLink to={`/profile`}>Profile</NavLink>

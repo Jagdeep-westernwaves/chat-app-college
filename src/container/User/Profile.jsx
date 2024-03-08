@@ -38,7 +38,7 @@ const Profile = () => {
       },
     };
     fmData.append("postimg", file.name);
-    fmData.append("uname", sessionStorage.getItem("demo"));
+    fmData.append("uname", localStorage.getItem("demo"));
     fmData.append("demo_image", file);
 
     try {
@@ -70,7 +70,7 @@ const Profile = () => {
           {
             id: localStorage.getItem("lid"),
             token: localStorage.getItem("jwt"),
-            uname: sessionStorage.getItem("demo"),
+            uname: localStorage.getItem("demo"),
           }
         )
         .then((res) => {
@@ -89,7 +89,7 @@ const Profile = () => {
       })
       .then((res) => {
         if (res.data[0].count > 0) {
-          sessionStorage.setItem("demo", values.uname);
+          localStorage.setItem("demo", values.uname);
 
           message.success("Successfully Loged In");
           window.location.reload(false);

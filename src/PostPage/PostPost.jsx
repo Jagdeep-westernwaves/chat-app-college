@@ -66,7 +66,7 @@ const PostPost = () => {
           `http://localhost:9000/profile`,
 
           {
-            uname: sessionStorage.getItem("demo"),
+            uname: localStorage.getItem("demo"),
             token: localStorage.getItem("jwt"),
           }
         )
