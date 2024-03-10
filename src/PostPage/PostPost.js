@@ -28,19 +28,18 @@ function getBase64(file) {
   });
 }
 
-const PostPost = () => {
+const PostPost = ({ getPosts }) => {
   const [defaultFileList, setDefaultFileList] = useState([]);
   const [postImage, setpostImage] = useState("");
+  const [form] = Form.useForm();
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const [userdetail, setUserdetail] = useState([]);
   const normFile = async ({ file, fileList }) => {
     setDefaultFileList(file);
-    if (fileList !== []) {
-      const postImages = await getBase64(fileList[0].originFileObj);
-      setpostImage(postImages);
-    }
+    const postImages = await getBase64(fileList[0].originFileObj);
+    setpostImage(postImages);
   };
   // const normVideo = async ({ file, fileList }) => {
   //   console.log(file, "file");
@@ -53,31 +52,29 @@ const PostPost = () => {
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
+      setPreviewImage(file.url || file.preview);
+      setPreviewVisible(true);
+      setPreviewTitle(
+        file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
+      );
     }
-    setPreviewImage(file.url || file.preview);
-    setPreviewVisible(true);
-    setPreviewTitle(
-      file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
-    );
   };
+  async function getData() {
+    axios
+      .post(
+        `http://localhost:9000/profile`,
 
+        {
+          uname: sessionStorage.getItem("demo"),
+          token: localStorage.getItem("jwt"),
+        }
+      )
+
+      .then((res) => {
+        setUserdetail(res.data);
+      });
+  }
   useEffect(() => {
-    async function getData() {
-      axios
-        .post(
-          `http://localhost:9000/profile`,
-
-          {
-            uname: sessionStorage.getItem("demo"),
-            token: localStorage.getItem("jwt"),
-          }
-        )
-
-        .then((res) => {
-          setUserdetail(res.data);
-        });
-    }
-
     getData();
   }, []);
   const onFinish = (values) => {
@@ -93,7 +90,13 @@ const PostPost = () => {
     fmData.append("uid", userdetail.id);
     fmData.append("demo_image", defaultFileList);
     try {
-      axios.post("http://localhost:9000/postpost", fmData);
+      axios.post("http://localhost:9000/postpost", fmData).then(() => {
+        setDefaultFileList([]);
+        getPosts();
+        form.resetFields();
+      }).catch(e => {
+        console.log("error", e);
+      });
     } catch (err) {
       console.log("Eroor: ", err);
     }
@@ -105,6 +108,7 @@ const PostPost = () => {
     <>
       <PostForm>
         <Form
+          form={form}
           layout="vertical"
           name="basic"
           initialValues={{
@@ -129,13 +133,12 @@ const PostPost = () => {
               <Form.Item
                 name="title"
                 noStyle
-                rules={[{ required: true, message: "Username is required" }]}
+                rules={[{ required: true, message: "Title is required" }]}
               >
                 <Input
                   className="Post-Input "
-                  placeholder={`What's on your mind, ${
-                    userdetail.name ? userdetail.name : "Friend"
-                  }`}
+                  placeholder={`What's on your mind, ${userdetail.name ? userdetail.name : "Friend"
+                    }`}
                 />
               </Form.Item>
             </Col>

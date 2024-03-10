@@ -40,11 +40,27 @@ const PostList = (props) => {
                   }
                   cover={
                     <Image
-                      fallback="http://localhost:9000/uploads/not_available.png"
+                    preview={{
+                      src:`http://localhost:9000/uploads/${item.postimg}`,
+                      style:{
+                        maxHeight: 500,
+                        height:'auto',
+                        width:'auto',
+                        maxWidth:500,
+                        backgroundPosition: "center-center",
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "cover",
+
+                        //   backgroundColor: "white",
+                      }
+                    }}
+                       fallback="http://localhost:9000/uploads/not_available.png"
                       src={`http://localhost:9000/uploads/${item.postimg}`}
                       style={{
-                        height: 500,
                         maxHeight: 500,
+                        height:'auto',
+                        width:'auto',
+                        maxWidth:500,
                         backgroundPosition: "center-center",
                         backgroundRepeat: "no-repeat",
                         backgroundSize: "cover",
