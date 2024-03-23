@@ -50,6 +50,10 @@ img {
   width: 150px;
   height: 150px;
 }
+.ant-image-preview-img{
+  height: auto;
+  width: auto;
+}
 .button {
   width: auto;
   min-width: 100px;
@@ -149,7 +153,7 @@ img {
   overflow-y: auto;
 }
 .newScroll:hover {
-  overflow-x: hidden;
+  overflow-x: auto;
 }
 
 .force-overflow {

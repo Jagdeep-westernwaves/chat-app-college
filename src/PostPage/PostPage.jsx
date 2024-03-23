@@ -6,19 +6,24 @@ import PostPost from "./PostPost";
 
 const PostPage = () => {
   const [state, setState] = useState([]);
-  useEffect(() => {
+  const getPosts = () => {
     axios
       .post(`http://localhost:9000/getposts`, {
         userId: localStorage.getItem("lid"),
       })
-      .then((res) => {
-        setState(get(res, "data", []));
-      });
+    .then((res) => {
+      setState(get(res, "data", []));
+    }).catch(e => {
+      console.log(e);
+    });
+  }
+  useEffect(() => {
+    getPosts();
   }, []);
 
   return (
     <>
-      <PostPost />
+      <PostPost getPosts={getPosts}/>
       <PostList state={state} setState={setState} />
     </>
   );
