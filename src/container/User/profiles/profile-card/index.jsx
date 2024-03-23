@@ -145,7 +145,7 @@ const LeftProfileCard = ({
                 : fontSize === "small" && "14px",
           }}
         >
-          {`${profile_data?.name}`}
+          {`${profile_data?.uname}`}
         </Typography>
       )}
       {/* {showEditOptions && (
@@ -245,55 +245,30 @@ const LeftProfileCard = ({
         }}
       >
         <Typography variant="h3" sx={labelStyle}>
-          {"label.first_name"}
+          Full Name
         </Typography>
         <Typography variant="h3" sx={userInfoStyle}>
-          {profile_data?.first_name}
+          {profile_data?.name}
         </Typography>
         <Typography variant="h3" sx={labelStyle}>
-          {"label.last_name"}
+          Cell Phone
         </Typography>
         <Typography variant="h3" sx={userInfoStyle}>
-          {profile_data?.last_name}
+          {profile_data.mno || "N/A"}
         </Typography>
         <Typography variant="h3" sx={labelStyle}>
-          {"label.cell_phone"}
-        </Typography>
-        <Typography variant="h3" sx={userInfoStyle}>
-          {profile_data?.cell_phone}
-        </Typography>
-        <Typography variant="h3" sx={labelStyle}>
-          {"label.email"}
+          E-mail
         </Typography>
         <Typography variant="h3" sx={userInfoStyle}>
           {profile_data?.email}
         </Typography>
         <Typography variant="h3" sx={labelStyle}>
-          {"label.organizations"}
+          Description
         </Typography>
         <Typography variant="h3" sx={userInfoStyle}>
-          {get(profile_data, "role", false) === 1 ||
-          get(profile_data, "role", false) === "Super Admin"
-            ? "label.all"
-            : profile_data?.organization_alias
-            ? get(profile_data, "organization_alias", "N/A")
-            : "N/A"}
+          {profile_data?.bio || "N/A"}
         </Typography>
       </Grid>
-      <Box>
-        {profile_data.mfa == 1 && (
-          <Grid container justifyContent={"center"}>
-            <Grid
-              item
-              sx={{
-                mt: 2,
-              }}
-            >
-              MFA QR code
-            </Grid>
-          </Grid>
-        )}
-      </Box>
     </Grid>
   );
 };

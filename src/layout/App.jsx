@@ -13,7 +13,6 @@ import Profilepage from "../container/User/Forgetpswd";
 import SearchPenal from "../container/User/SearchPenal";
 import Profile from "../container/User/Profile";
 import Chat from "../container/User/Chat/Chat";
-import Chat from "../container/User/Chat/Chat";
 
 const App = () => {
   useEffect(() => {

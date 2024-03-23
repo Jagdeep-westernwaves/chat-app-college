@@ -107,7 +107,7 @@ const Profile = () => {
   };
   return (
     <>
-      <ProfileForm>
+      {/* <ProfileForm>
         <Row>
           <Col span={8}>
             <div>
@@ -160,8 +160,8 @@ const Profile = () => {
             </Row>
           </Col>
         </Row>
-      </ProfileForm>
-      <UserProfile />
+      </ProfileForm> */}
+      <UserProfile profile_data={userdetail} />
       <Modal
         title="Update Profile"
         centered

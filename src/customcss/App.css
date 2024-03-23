@@ -37,3 +37,199 @@
     transform: rotate(360deg);
   }
 }
+@font-face {
+  font-family: "EthnocentricRg";
+  src: url("./assets/fonts/ethnocentric/EthnocentricRg-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.shining-button {
+  position: relative;
+  overflow: hidden;
+  background-color: red;
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+}
+
+.logs-list-bg-color:hover {
+  background-size: 400% 400%;
+  background-position: "center";
+  animation: gradient 3s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.shining-button:hover::before {
+  transform: translate(100%, 100%) rotate(45deg);
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+  font-family: "Mulish";
+  src: url("../assets/fonts/Mulish/mulish.ttf");
+  font-weight: bolder;
+  font-style: bolder;
+}
+
+@font-face {
+  font-family: "Mulish-400";
+  src: url("../assets/fonts/Mulish/Mulish-SemiBold.ttf");
+  font-weight: bolder;
+  font-style: bolder;
+}
+
+@font-face {
+  font-family: "Mulish-500";
+  src: url("../assets/fonts/Mulish/Mulish-ExtraBold.ttf");
+  font-weight: bolder;
+  font-style: bolder;
+}
+
+/* input[type="file"] {
+  display: none;
+} */
+svg:focus {
+  outline: none;
+}
+
+div[role="presentation"] {
+  min-width: 270px;
+  cursor: default;
+}
+
+@font-face {
+  font-family: "Mulish-800";
+  src: url("../assets/fonts/Mulish/mulish800.ttf");
+  font-weight: bolder;
+  font-style: bolder;
+}
+
+@font-face {
+  font-family: "Mulish-300";
+  src: url("../assets/fonts/Mulish/mulish300.ttf");
+  font-weight: bolder;
+  font-style: bolder;
+}
+
+.underlined {
+  position: relative;
+  /* margin-right: 1rem; */
+}
+
+/* body {
+  background-color: #f2f2f7 !important;
+} */
+
+* {
+  font-family: "Mulish-400";
+}
+
+.underlined:after {
+  content: "";
+  position: absolute;
+  bottom: -2vh;
+  left: 0;
+  height: 0.6vh;
+  width: 100%;
+  border: solid 0.5vh #b4b8b7;
+  border-color: #b4b8b7 transparent transparent transparent;
+}
+
+.small {
+  font-size: 60%;
+}
+
+.big {
+  font-size: 200%;
+}
+
+.ethnocentricRgFont {
+  font-family: "EthnocentricRg";
+}
+
+/* * {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+} */
+
+/* scroll bar */
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  /* box-shadow: inset 0 0 5px rgb(244, 244, 244); */
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #9e9e9e;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #c2c2c2;
+}
+
+.otp-field {
+  display: flex;
+  margin-top: 15px;
+  justify-content: center;
+}
+
+/* .otp-field div:first-child input {
+  border-left: 2px solid #dfedf2;
+  border-radius: 5px 0 0 5px;
+}
+
+.otp-field div:last-child input {
+  border-right: 2px solid #dfedf2;
+  border-radius: 0 5px 5px 0;
+} */
+
+.otp-field__input {
+  display: flex;
+  text-align: center;
+  width: 40px;
+  height: 40px;
+  font-size: 22px;
+  border: 0px;
+  margin: 4px;
+  font-family: Mulish-400;
+  border-top: 2px solid #dfedf2;
+  border-bottom: 2px solid #dfedf2;
+  border-radius: 5px;
+  background-color: #fff;
+  border-right: 2px solid #dfedf2;
+  border-left: 2px solid #dfedf2;
+}
+
+.otp-field span {
+  display: none;
+}

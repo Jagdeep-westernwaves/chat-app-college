@@ -136,6 +136,7 @@ const UserProfile = ({
         sx={{
           backgroundColor: "transparant",
           width: "100%",
+          p: 1,
           // height: "80vh",
           // minHeight: "80vh",
           ml: !matchesXs ? 2 : 0,
@@ -167,7 +168,7 @@ const UserProfile = ({
               fontSize: "13px",
             }}
           >
-            {t("profile.label.my_notification")}
+            My Notification
           </Typography>
           <Typography
             variant="h4"
@@ -179,7 +180,7 @@ const UserProfile = ({
               color: "#777",
             }}
           >
-            {t("profile.label.my_notification_description")}
+            We'll send you login Notifications, new updates.
           </Typography>
           <Divider />
           <Grid container spacing={0}>
@@ -195,7 +196,7 @@ const UserProfile = ({
                   fontSize: "13px",
                 }}
               >
-                {t("profile.label.text_message_login_notifications")}
+                Text message login notifications.
               </Typography>
               <Typography
                 variant="h4"
@@ -207,9 +208,7 @@ const UserProfile = ({
                   color: "#777",
                 }}
               >
-                {t(
-                  "profile.label.receive_texts_whenever_you_loggin_to_your_account"
-                )}
+                Receive texts whenever you loggin to your account.
               </Typography>
             </Grid>
             <Grid
@@ -246,7 +245,7 @@ const UserProfile = ({
                   fontSize: "13px",
                 }}
               >
-                {t("profile.label.text_mail_login_notifications")}
+                Text mail login notifications
               </Typography>
               <Typography
                 variant="h4"
@@ -258,9 +257,7 @@ const UserProfile = ({
                   color: "#777",
                 }}
               >
-                {t(
-                  "profile.label.receive_mail_wheneveryou_loggin_toyour_account"
-                )}
+                Receive E-mail whenever you loggin to your account.
               </Typography>
             </Grid>
             <Grid
@@ -308,67 +305,48 @@ const UserProfile = ({
               fontSize: "13px",
             }}
           >
-            {t("profile.label.account_settings")}
-          </Typography>
-        </Grid>
-        <Grid
-          sx={{
-            backgroundColor: "#fff",
-            width: "100%",
-            overflow: "hidden",
-            overflowY: "auto",
-            display: "block",
-            marginBottom: 4,
-            borderRadius: 2,
-            boxShadow: "0px 0px 13px rgba(0,0,0,0.1)",
-          }}
-        >
-          <Typography
-            variant="h2"
-            sx={{
-              marginLeft: "1.5vh",
-              marginTop: "1.5vh",
-              fontFamily: "Mulish-800",
-              fontWeight: "bold",
-              marginBottom: "1.5vh",
-              fontSize: "13px",
-            }}
-          >
-            {t("profile.button.delete_account")}
+            Account Settings
           </Typography>
           <Divider />
           <Grid container spacing={0}>
-            <Grid
-              item
-              xs={10}
-              lg={10}
-              md={10}
-              sm={10}
-              sx={{
-                my: "auto",
-              }}
-            >
+            <Grid item xs={10} sm={10} md={10} lg={10}>
               <Typography
                 variant="h2"
                 sx={{
                   marginLeft: "1.5vh",
+                  marginTop: "1.5vh",
+                  marginBottom: "0.5vh",
                   fontFamily: "Mulish-800",
                   fontWeight: "bold",
                   fontSize: "13px",
                 }}
               >
-                {t("profile.label.delete_account_confirmation")}
+                Delete Account
+              </Typography>
+              <Typography
+                variant="h4"
+                sx={{
+                  marginLeft: "1.5vh",
+                  marginBottom: "1.5vh",
+                  fontFamily: "Mulish-300",
+                  fontSize: "13px",
+                  color: "#777",
+                }}
+              >
+                Are you sure you want to leave Maxi Lockers?
               </Typography>
             </Grid>
             <Grid
               xs={2}
-              lg={2}
-              md={2}
               sm={2}
+              md={2}
+              lg={2}
               item
               sx={{
                 backgroundColor: "#fff",
                 height: "100%",
+                overflow: "hidden",
+                overflowY: "auto",
                 alignItems: "center",
                 justifyContent: "center",
                 display: "flex",
@@ -376,9 +354,6 @@ const UserProfile = ({
                 padding: 2,
               }}
             >
-              {/* <Button color="error" onClick={() => {}}>
-                                {t("profile.button.delete_account")}
-                            </Button> */}
               <IconButton color="error">
                 <DeleteIcon />
               </IconButton>
