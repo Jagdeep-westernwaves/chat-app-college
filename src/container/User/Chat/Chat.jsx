@@ -1,28 +1,29 @@
 import { Avatar, Button, Col, Form, Input, Row } from "antd";
 import axios from "axios";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 import { capitalize, map, toNumber } from "lodash";
 import React, { useEffect, useState } from "react";
 import { FcLeft } from "react-icons/fc";
 import { ChartForm } from "../../../Style/Style";
 import { io } from "socket.io-client";
+import { useParams } from "react-router-dom";
 const SERVER_URL = "http://localhost:9000"; // Replace with your server URL
 
 const Chat = () => {
   const socket = io(SERVER_URL);
+  const { uname } = useParams();
   const [state, setState] = useState();
   const onFinish = (values) => {
     const socket = io(SERVER_URL);
     axios
       .post("http://localhost:9000/sendMsg", {
         lid: localStorage.getItem("lid"),
-        fid: localStorage.getItem("fidOfChat"),
+        uname: uname,
         msg: values.msg,
       })
       .then((res) => {
         setState(res.data);
-        socket.emit("send_msg")
-        
+        socket.emit("send_msg");
       });
     form.resetFields();
   };
@@ -33,20 +34,20 @@ const Chat = () => {
 
   useEffect(() => {
     // Listen for "hello" message from server
-  const socket = io(SERVER_URL);
-  axios
-    .post("http://localhost:9000/hndleMsg", {
-      lid: localStorage.getItem("lid"),
-      fid: localStorage.getItem("fidOfChat"),
-    })
-    .then((res) => {
-      setState(res.data);
-    });
+    const socket = io(SERVER_URL);
+    axios
+      .post("http://localhost:9000/hndleMsg", {
+        lid: localStorage.getItem("lid"),
+        uname: uname,
+      })
+      .then((res) => {
+        setState(res.data);
+      });
     socket.on("recieve_msg", () => {
       axios
         .post("http://localhost:9000/hndleMsg", {
           lid: localStorage.getItem("lid"),
-          fid: localStorage.getItem("fidOfChat"),
+          uname: uname,
         })
         .then((res) => {
           setState(res.data);
@@ -58,30 +59,34 @@ const Chat = () => {
     //   axios
     //     .post("http://localhost:9000/hndleMsg", {
     //       lid: localStorage.getItem("lid"),
-    //       fid: localStorage.getItem("fidOfChat"),
+    //       uname: uname,
     //     })
     //     .then((res) => {
     //       setState(res.data);
     //     });
     // }, 800);
+    scrollToBottom();
 
     return () => {
       // clearInterval(chatRefresher);
-      localStorage.removeItem("fidOfChat");
-      localStorage.removeItem("nameOfFriend");
-      localStorage.removeItem("uname");
-      localStorage.removeItem("profile");
+      // localStorage.removeItem("fidOfChat");
+      // localStorage.removeItem("nameOfFriend");
+      // localStorage.removeItem("uname");
+      // localStorage.removeItem("profile");
     };
-  }, []);
-
+  }, [state]);
+  function scrollToBottom() {
+    var chatBox = document.getElementById("chat-box-container");
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
   const [form] = Form.useForm();
   return (
     <ChartForm>
-      {" "}
       <>
         <Row style={{ background: "#f0f2f5", padding: "7px" }}>
-          {" "}
-        <Link to={"/Uprofile/"+localStorage.getItem("uname")}>  <FcLeft style={{ paddingTop: "10px" }} size={50} /></Link>
+          <Link to={"/Uprofile/" + uname}>
+            <FcLeft style={{ paddingTop: "10px" }} size={50} />
+          </Link>
           <Avatar
             size={60}
             src={
@@ -134,28 +139,26 @@ const Chat = () => {
       <Form
         form={form}
         name="basic"
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
         rese
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Row>
-          <Col span={20}>
-            <Form.Item
-              style={{ width: 900 }}
-              name="msg"
-              rules={[
-                { required: true, message: "Please input your username!" },
-              ]}
-            >
-              <Input />
+        <Row
+          style={{
+            width: "100%",
+            padding: 8,
+            gap: "8px",
+          }}
+        >
+          <Col span={19}>
+            <Form.Item style={{ minWidth: "100%" }} name="msg">
+              <Input style={{ minWidth: "100%" }} />
             </Form.Item>
           </Col>
-          <Col>
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          <Col span={4}>
+            <Form.Item>
               <Button type="primary" htmlType="submit">
                 Submit
               </Button>

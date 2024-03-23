@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Menu, Image, Col, Row } from "antd";
 import { Link, NavLink, useHistory } from "react-router-dom";
+import { Grid } from "@mui/material";
 
 const { SubMenu } = Menu;
 const Menus = () => {
@@ -27,71 +28,73 @@ const Menus = () => {
     window.location.reload(false);
   };
   return (
-    <>
-      <Row>
-        <Col span={17} style={{ paddingTop: "10px", paddingLeft: 10 }}>
-          <Link to="/">
-            {" "}
-            <Image
-              width={200}
-              preview={false}
-              style={{ display: "flex" }}
-              src="/logo512.png"
-            />
-          </Link>
-          <Menu
+    <Row
+      style={{
+        background: "#fff",
+        position: "fixed",
+        top: 0,
+        zIndex: 9999,
+        width: "100%",
+      }}
+    >
+      <Col span={4} style={{ paddingTop: "10px", paddingLeft: 10 }}>
+        <Link to="/">
+          <Image
+            width={200}
+            preview={false}
             style={{ display: "flex" }}
-            onClick={handleClick}
-            selectedKeys={current}
-            mode="horizontal"
-          >
-            <Menu.Item key="Home">
-              <NavLink to="/">Home</NavLink>
-            </Menu.Item>
-            {/* <Menu.Item key="About">
-              <NavLink to="/about">About Us</NavLink>
-            </Menu.Item> */}
-            {/* <Menu.Item key="Products">
-              <NavLink to="/product/1">Products</NavLink>
-            </Menu.Item>
-            <Menu.Item key="Contact">
-              <NavLink to="/contact">Contact Us</NavLink>
-            </Menu.Item> */}
-            {localStorage.getItem("demo") ? (
-              <Menu.Item key="Friends">
-                <NavLink to={`/friends`}>Friends</NavLink>
+            src="/logo512.png"
+          />
+        </Link>
+      </Col>
+      <Col span={20} style={{ paddingTop: "10px", paddingLeft: 10 }}>
+        <Grid container justifyContent={"space-between"}>
+          <Grid item>
+            {" "}
+            <Menu
+              style={{ display: "flex" }}
+              onClick={handleClick}
+              selectedKeys={current}
+              mode="horizontal"
+            >
+              <Menu.Item key="Home">
+                <NavLink to="/">Home</NavLink>
               </Menu.Item>
-            ) : (
-              <Menu.Item key="Login">
-                <NavLink to={`/`}>Log In</NavLink>
-              </Menu.Item>
-            )}
-          </Menu>
-        </Col>
-
-        <Col span={7}>
-          <Menu
-            onClick={handleClick}
-            style={{ float: "right", marginTop: 60 }}
-            selectedKeys={current}
-            mode="horizontal"
-          >
-            {localStorage.getItem("demo") ? (
-              <SubMenu key="SubMenu" title={uname}>
-                <Menu.Item key="profile">
-                  <NavLink to={`/profile`}>Profile</NavLink>
+              {localStorage.getItem("demo") ? (
+                <Menu.Item key="Friends">
+                  <NavLink to={`/friends`}>Friends</NavLink>
                 </Menu.Item>
-                <Menu.Item key="Logout">
-                  <NavLink to={`/`} onClick={logout}>
-                    Log Out
-                  </NavLink>
+              ) : (
+                <Menu.Item key="Login">
+                  <NavLink to={`/`}>Log In</NavLink>
                 </Menu.Item>
-              </SubMenu>
-            ) : null}
-          </Menu>
-        </Col>
-      </Row>
-    </>
+              )}
+            </Menu>
+          </Grid>
+          <Grid item>
+            <Menu
+              onClick={handleClick}
+              style={{ float: "right" }}
+              selectedKeys={current}
+              mode="horizontal"
+            >
+              {localStorage.getItem("demo") ? (
+                <SubMenu key="SubMenu" title={uname}>
+                  <Menu.Item key="profile">
+                    <NavLink to={`/profile`}>Profile</NavLink>
+                  </Menu.Item>
+                  <Menu.Item key="Logout">
+                    <NavLink to={`/`} onClick={logout}>
+                      Log Out
+                    </NavLink>
+                  </Menu.Item>
+                </SubMenu>
+              ) : null}
+            </Menu>
+          </Grid>
+        </Grid>
+      </Col>
+    </Row>
   );
 };
 

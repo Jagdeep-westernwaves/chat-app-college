@@ -125,7 +125,7 @@ const PostPost = ({ getPosts }) => {
   };
   return (
     <>
-      <PostForm>
+      <PostForm style={{ background: "#fff", padding: "15px 10px" }}>
         <Form
           form={form}
           layout="vertical"
@@ -212,7 +212,7 @@ const PostPost = ({ getPosts }) => {
                 )}
               </Form.Item>
             </Col>
-            <Col span={24}>
+            <Col span={24} style={{ margin: "0px 0px 10px 0px" }}>
               <Form.Item
                 name="privacy"
                 noStyle

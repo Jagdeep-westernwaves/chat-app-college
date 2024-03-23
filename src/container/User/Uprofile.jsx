@@ -10,37 +10,36 @@ const Profile = () => {
   const { fname } = useParams();
   const [userdetail, setUserdetail] = useState([]);
   const [state, setState] = useState([]);
-  useEffect(() => {
-    async function getData() {
-      axios
-        .post(
-          `http://localhost:9000/profile`,
+  async function getData() {
+    axios
+      .post(
+        `http://localhost:9000/profile`,
 
-          {
-            uname: fname,
-            token: localStorage.getItem("jwt"),
-            id: localStorage.getItem("lid"),
-          }
-        )
-        .then((res) => {
-          setUserdetail(res.data);
-          let data = [];
-          map(get(res.data, "posts", []), (item) => {
-            item.imgname =
-              get(res.data, "picBgoogle", "") !== ""
-                ? res.data.picBgoogle
-                : res.data.imgname;
-            item.uname = res.data.uname;
-            data.push(item);
-          });
-          localStorage.setItem("fidOfChat", res.data.id);
-          localStorage.setItem("nameOfFriend", res.data.name);
-          localStorage.setItem("profile", res.data.imgname);
-          localStorage.setItem("uname", res.data.uname);
-          setState(data);
+        {
+          uname: fname,
+          token: localStorage.getItem("jwt"),
+          id: localStorage.getItem("lid"),
+        }
+      )
+      .then((res) => {
+        setUserdetail(res.data);
+        let data = [];
+        map(get(res.data, "posts", []), (item) => {
+          item.imgname =
+            get(res.data, "picBgoogle", "") !== ""
+              ? res.data.picBgoogle
+              : res.data.imgname;
+          item.uname = res.data.uname;
+          data.push(item);
         });
-    }
-
+        localStorage.setItem("fidOfChat", res.data.id);
+        localStorage.setItem("nameOfFriend", res.data.name);
+        localStorage.setItem("profile", res.data.imgname);
+        localStorage.setItem("uname", res.data.uname);
+        setState(data);
+      });
+  }
+  useEffect(() => {
     getData();
   }, []);
 

@@ -11,19 +11,20 @@ const PostPage = () => {
       .post(`http://localhost:9000/getposts`, {
         userId: localStorage.getItem("lid"),
       })
-    .then((res) => {
-      setState(get(res, "data", []));
-    }).catch(e => {
-      console.log(e);
-    });
-  }
+      .then((res) => {
+        setState(get(res, "data", []));
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   useEffect(() => {
     getPosts();
   }, []);
 
   return (
     <>
-      <PostPost getPosts={getPosts}/>
+      <PostPost getPosts={getPosts} />
       <PostList state={state} setState={setState} />
     </>
   );

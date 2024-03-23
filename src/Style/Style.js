@@ -722,19 +722,17 @@ const ModalForm = styled.div`
   }
 `;
 export const PostForm = styled.div`
-  margin: 24px auto 24px;
+  margin: 10px auto;
   border-radius: 8px;
   box-sizing: border-box;
   box-shadow: 2px 2px 5px 3px rgb(240, 242, 245);
-  background: white;
   overflow: hidden;
-  padding: 15px 0px;
+  /* padding: 15px 0px; */
   max-width: 550px;
   width: 100%;
   display: flex;
   flex-direction: column;
   font-family: Muli, sans-serif;
-  margin-top: 5%;
   .ant-upload-list-picture-card-container {
     display: inline-block;
     width: 100%;
@@ -809,10 +807,10 @@ export const PostForm = styled.div`
   }
   .PostButton {
     font-family: Muli, sans-serif;
-    padding: 5px 7px;
-    height: 40px;
+    padding: 1px;
     font-size: 13px;
     text-align: center;
+    border: 1px solid #b1b1b1;
     font-weight: 400;
     cursor: pointer;
     position: relative;
@@ -899,6 +897,31 @@ export const ChartForm = styled.div`
   display: flex;
   flex-direction: column;
   font-family: Muli, sans-serif;
-  margin-top: 5%;
+  /* margin-top: 5%; */
+
+  .scrollbar {
+    margin-left: 30px;
+    float: left;
+    height: 80vh;
+    background: #ffffff;
+    overflow-y: auto;
+    margin-left: 10px;
+    padding-left: 15px;
+    margin-bottom: 25px;
+  }
+  .newScroll {
+    height: 400px !important;
+    background-color: transparent !important;
+    margin-left: 0px !important;
+    padding-top: 10px;
+    width: 100%;
+    margin-right: -5px !important;
+  }
+  .scrollbar:hover {
+    overflow-y: auto;
+  }
+  .newScroll:hover {
+    overflow-x: auto;
+  }
 `;
 export { CenterForm, ProfileForm, ModalForm };

@@ -13,6 +13,7 @@ import Profilepage from "../container/User/Forgetpswd";
 import SearchPenal from "../container/User/SearchPenal";
 import Profile from "../container/User/Profile";
 import Chat from "../container/User/Chat/Chat";
+import { Box } from "@mui/material";
 
 const App = () => {
   useEffect(() => {
@@ -23,19 +24,29 @@ const App = () => {
       {localStorage.getItem("jwt") ? (
         <>
           <Menus />
-          <Switch>
-            <Route exact path="/" component={Home} />
-            {/* <Route exact path="/about" component={About} /> */}
-            {/* <Route path="/product/:pid" component={Product} /> */}
-            <Route path="/CatProduct/:Catname" component={CatProduct} />
-            <Route exact path="/chat/:uname" component={Chat} />
-            <Route path="/Uprofile/:fname" component={Uprofile} />
-            <Route path="/user/:fname" component={User} />
-            <Route path="/forget-password" component={Profilepage} />
-            <Route path="/friends" component={SearchPenal} />
-            <Route path="/profile" component={Profile} />
-            <Route component={Error} />
-          </Switch>
+          <Box
+            sx={{
+              overflow: "scroll",
+              height: "calc(100vh -60px)",
+              maxHeight: "calc(100vh -60px)",
+              marginTop: "60px",
+              width: "100%",
+            }}
+          >
+            <Switch>
+              <Route exact path="/" component={Home} />
+              {/* <Route exact path="/about" component={About} /> */}
+              {/* <Route path="/product/:pid" component={Product} /> */}
+              <Route path="/CatProduct/:Catname" component={CatProduct} />
+              <Route exact path="/chat/:uname" component={Chat} />
+              <Route path="/Uprofile/:fname" component={Uprofile} />
+              <Route path="/user/:fname" component={User} />
+              <Route path="/forget-password" component={Profilepage} />
+              <Route path="/friends" component={SearchPenal} />
+              <Route path="/profile" component={Profile} />
+              <Route component={Error} />
+            </Switch>
+          </Box>
         </>
       ) : (
         <Switch>
