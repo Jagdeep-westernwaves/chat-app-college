@@ -14,9 +14,12 @@ import {
 import { ProfileForm, ModalForm } from "../../Style/Style";
 import UserProfile from "./profiles";
 import axios from "axios";
+import useAPIClient from "../../service/API/api-Client";
+import { getProfile } from "../../service/API";
 
 const { TextArea } = Input;
 const Profile = () => {
+  const apiClient = useAPIClient();
   const [visible, setVisible] = useState(false);
   const [userdetail, setUserdetail] = useState([]);
   const [defaultFileList, setDefaultFileList] = useState([]);
@@ -63,19 +66,10 @@ const Profile = () => {
   };
   useEffect(() => {
     async function getData() {
-      axios
-        .post(
-          `http://localhost:9000/profile`,
-
-          {
-            id: localStorage.getItem("lid"),
-            token: localStorage.getItem("jwt"),
-            uname: localStorage.getItem("demo"),
-          }
-        )
-        .then((res) => {
-          setUserdetail(res.data);
-        });
+      const data = await getProfile();
+      if (data) {
+        setUserdetail(data);
+      }
     }
 
     getData();

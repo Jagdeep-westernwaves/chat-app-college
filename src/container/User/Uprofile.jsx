@@ -1,43 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { Button, Row, Avatar, Col } from "antd";
-import { PostForm, ProfileForm } from "../../Style/Style";
+import { Row, Avatar, Col } from "antd";
+import { ProfileForm } from "../../Style/Style";
 import { useParams, Link } from "react-router-dom";
-import axios from "axios";
 import PostList from "../../PostPage/PostList";
 import { get, map, size } from "lodash";
+import { getProfile } from "../../service/API";
 
 const Profile = () => {
   const { fname } = useParams();
   const [userdetail, setUserdetail] = useState([]);
   const [state, setState] = useState([]);
   async function getData() {
-    axios
-      .post(
-        `http://localhost:9000/profile`,
-
-        {
-          uname: fname,
-          token: localStorage.getItem("jwt"),
-          id: localStorage.getItem("lid"),
-        }
-      )
-      .then((res) => {
-        setUserdetail(res.data);
-        let data = [];
-        map(get(res.data, "posts", []), (item) => {
+    const res = await getProfile(fname);
+    if (res) {
+      setUserdetail(res);
+      localStorage.setItem("fidOfChat", res.id);
+      localStorage.setItem("nameOfFriend", res.name);
+      localStorage.setItem("profile", res.imgname);
+      localStorage.setItem("uname", res.uname);
+      setState(
+        map(get(res, "posts", []), (item) => {
           item.imgname =
-            get(res.data, "picBgoogle", "") !== ""
-              ? res.data.picBgoogle
-              : res.data.imgname;
-          item.uname = res.data.uname;
-          data.push(item);
-        });
-        localStorage.setItem("fidOfChat", res.data.id);
-        localStorage.setItem("nameOfFriend", res.data.name);
-        localStorage.setItem("profile", res.data.imgname);
-        localStorage.setItem("uname", res.data.uname);
-        setState(data);
-      });
+            get(res, "picBgoogle", "") !== "" ? res.picBgoogle : res.imgname;
+          item.uname = res.uname;
+          return item;
+        })
+      );
+    }
   }
   useEffect(() => {
     getData();

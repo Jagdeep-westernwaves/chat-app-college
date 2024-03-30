@@ -10,7 +10,7 @@ const ChartForm = styled.div`
   padding: 40px 0px 24px;
   margin: 0px auto 24px;
   padding: 24px 40px;
-  max-width: 590px;
+  max-width: 1173px;
   width: 100%;
   display: flex;
   flex-direction: column;

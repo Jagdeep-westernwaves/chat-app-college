@@ -3,9 +3,12 @@ import axios from "axios";
 import { Tag, Avatar, Button, Table, Input } from "antd";
 import { ProfileForm } from "../../Style/Style";
 import { lowerCase } from "lodash";
+import { useSocket } from "../../context/SocketProvider";
+import UserListCard from "../../component/user-list-card";
 const Confirm = () => {
   const [filteredUser, setFilteredUser] = useState([]);
   const [value, setValue] = useState("");
+  const socket = useSocket();
   const [test, settest] = useState(0);
 
   const getAllLogs = async () => {
@@ -18,28 +21,7 @@ const Confirm = () => {
         }
       )
       .then((res) => {
-        setFilteredUser(
-          res.data?.map((user, index) => ({
-            key: index,
-            name: user.name,
-            uname: user.uname,
-            mno: user.mno,
-            Profile: (
-              <Avatar
-                size={50}
-                shape="circle"
-                src={`http://localhost:9000/uploads/${user?.imgname}`}
-              />
-            ),
-            duname: (
-              <div>
-                {user.name} <br />
-                <Tag color="blue">{user.uname}</Tag>
-              </div>
-            ),
-            btn: <Button onClick={() => removeuser(user)}>Confirm</Button>,
-          }))
-        );
+        setFilteredUser(res.data);
       });
   };
 
@@ -65,11 +47,10 @@ const Confirm = () => {
 
   useEffect(() => {
     getAllLogs();
-    const interval = setInterval(() => {
-      getAllLogs();
-    }, 10000);
-
-    return () => clearInterval(interval);
+    socket.on("recieve_request", () => getAllLogs());
+    return () => {
+      socket.off("recieve_request", () => getAllLogs());
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
@@ -119,20 +100,7 @@ const Confirm = () => {
               }}
               allowClear
             />
-            <Table
-              bordered
-              onRow={(i) => ({
-                onClick: (e) => {
-                  // history.push(
-                  //   `/admin/viewLog/${i.id}/${i.Profile.props.children}`
-                  // );
-                },
-              })}
-              columns={columns}
-              dataSource={dataSource}
-              size="small"
-              pagination={false}
-            />
+            <UserListCard data={dataSource} req={2} />
           </div>
         </ProfileForm>
       ) : null}

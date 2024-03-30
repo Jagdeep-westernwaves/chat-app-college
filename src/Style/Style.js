@@ -880,7 +880,8 @@ export const PostForm = styled.div`
   }
 `;
 export const ChartForm = styled.div`
-  margin: 0px auto 24px;
+  margin: 0px auto 0px;
+  border: 1px solid #dbdbdb;
   border-radius: 8px;
   box-sizing: border-box;
   box-shadow: 2px 2px 5px 3px rgb(240, 242, 245);
@@ -888,12 +889,13 @@ export const ChartForm = styled.div`
       rgba(255, 255, 255, 0.5),
       rgba(255, 255, 255, 0.5)
     ),
-    url("/wap.jpg");
+    url("/wap-light.jpg");
   overflow: hidden;
   padding: 0px 0px 15px 0px;
-  max-width: 520px;
-  width: 520px;
+  max-width: 1173px;
   width: 100%;
+  height: calc(100vh - 70px);
+  min-height: calc(100vh - 70px);
   display: flex;
   flex-direction: column;
   font-family: Muli, sans-serif;
@@ -902,7 +904,7 @@ export const ChartForm = styled.div`
   .scrollbar {
     margin-left: 30px;
     float: left;
-    height: 80vh;
+    height: 100%;
     background: #ffffff;
     overflow-y: auto;
     margin-left: 10px;
@@ -910,7 +912,6 @@ export const ChartForm = styled.div`
     margin-bottom: 25px;
   }
   .newScroll {
-    height: 400px !important;
     background-color: transparent !important;
     margin-left: 0px !important;
     padding-top: 10px;

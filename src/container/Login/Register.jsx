@@ -3,6 +3,7 @@ import { Form, Input, Button, Row, Col, message, Select, Checkbox } from "antd";
 import axios from "axios";
 import { NavLink, useHistory } from "react-router-dom";
 import { CenterForm } from "../../Style/Style";
+import { registerHandler } from "../../service/API";
 const { Option } = Select;
 const layout = {
   layout: "vertical",
@@ -24,37 +25,14 @@ const validateMessages = {
 const Register = () => {
   const history = useHistory();
   const onFinish = (values) => {
-    console.log(values);
-
-    axios
-      .post(
-        `http://localhost:9000/user`,
-
-        {
-          uname: values.user.uname,
-        }
-      )
-      .then((res) => {
-        if (res.data[0].count > 0) {
-          message.error("User Name Already Exist Try Another User Name");
-        } else {
-          axios
-            .post(
-              `http://localhost:9000/reg`,
-
-              {
-                uname: values.user.uname,
-                pswd: values.user.pswd,
-                email: values.user.email,
-                name: values.user.name,
-                mno: values.user.phone,
-              }
-            )
-            .then((res) => {
-              history.push("/");
-            });
-        }
-      });
+    registerHandler({
+      ...values.user,
+      mobno: values.user.phone,
+    }).then((res) => {
+      if (res.status) {
+        history.push("/");
+      }
+    });
   };
 
   const prefixSelector = (

@@ -14,6 +14,10 @@ import SearchPenal from "../container/User/SearchPenal";
 import Profile from "../container/User/Profile";
 import Chat from "../container/User/Chat/Chat";
 import { Box } from "@mui/material";
+import Call from "../container/User/Chat/Call";
+import RoomPage from "../container/User/Chat/call-peer";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
   useEffect(() => {
@@ -21,14 +25,14 @@ const App = () => {
   }, []);
   return (
     <>
-      {localStorage.getItem("jwt") ? (
+      {localStorage.getItem("authToken") ? (
         <>
           <Menus />
           <Box
             sx={{
               overflow: "scroll",
-              height: "calc(100vh -60px)",
-              maxHeight: "calc(100vh -60px)",
+              height: "calc(100vh - 60px)",
+              maxHeight: "calc(100vh - 60px)",
               marginTop: "60px",
               width: "100%",
             }}
@@ -39,6 +43,7 @@ const App = () => {
               {/* <Route path="/product/:pid" component={Product} /> */}
               <Route path="/CatProduct/:Catname" component={CatProduct} />
               <Route exact path="/chat/:uname" component={Chat} />
+              <Route exact path="/call/:uname" component={RoomPage} />
               <Route path="/Uprofile/:fname" component={Uprofile} />
               <Route path="/user/:fname" component={User} />
               <Route path="/forget-password" component={Profilepage} />
@@ -51,10 +56,24 @@ const App = () => {
       ) : (
         <Switch>
           <Route exact path="/" component={File} />
+          <Route exact path="/call/:uname" component={Call} />
           <Route path="/register/" component={Register} />
           <Route component={Error} />
         </Switch>
       )}
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        limit={2}
+      />
     </>
   );
 };

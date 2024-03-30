@@ -3,18 +3,44 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { capitalize, map, toNumber } from "lodash";
 import React, { useEffect, useState } from "react";
-import { FcLeft } from "react-icons/fc";
 import { ChartForm } from "../../../Style/Style";
-import { io } from "socket.io-client";
 import { useParams } from "react-router-dom";
-const SERVER_URL = "http://localhost:9000"; // Replace with your server URL
+import ChatMessageWithArrow, {
+  ChatMessageWithRightArrow,
+} from "../../../Style/ChatMessage";
+import useAPIClient from "../../../service/API/api-Client";
+import { useSocket } from "../../../context/SocketProvider";
+import { getProfile } from "../../../service/API";
 
 const Chat = () => {
-  const socket = io(SERVER_URL);
+  const socket = useSocket();
+  const apiClient = useAPIClient();
   const { uname } = useParams();
+  const [friendProfile, setFriendProfile] = useState({});
   const [state, setState] = useState();
+  const getFriendProfile = async () => {
+    const res = await getProfile();
+    if (res) {
+      console.log("✌️res --->", res);
+      setFriendProfile(res);
+    }
+  };
+  function scrollToBottom() {
+    var chatBox = document.getElementById("chat-box-container");
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+  const getMessage = async () => {
+    const res = await apiClient.post("/hndleMsg", {
+      lid: localStorage.getItem("lid"),
+      uname: uname,
+    });
+    if (res) {
+      setState(res);
+      scrollToBottom();
+    }
+  };
+
   const onFinish = (values) => {
-    const socket = io(SERVER_URL);
     axios
       .post("http://localhost:9000/sendMsg", {
         lid: localStorage.getItem("lid"),
@@ -23,7 +49,9 @@ const Chat = () => {
       })
       .then((res) => {
         setState(res.data);
+        getMessage();
         socket.emit("send_msg");
+        // socket.emit("send_msg");
       });
     form.resetFields();
   };
@@ -33,106 +61,48 @@ const Chat = () => {
   };
 
   useEffect(() => {
-    // Listen for "hello" message from server
-    const socket = io(SERVER_URL);
-    axios
-      .post("http://localhost:9000/hndleMsg", {
-        lid: localStorage.getItem("lid"),
-        uname: uname,
-      })
-      .then((res) => {
-        setState(res.data);
-      });
+    getFriendProfile();
+    getMessage();
     socket.on("recieve_msg", () => {
-      axios
-        .post("http://localhost:9000/hndleMsg", {
-          lid: localStorage.getItem("lid"),
-          uname: uname,
-        })
-        .then((res) => {
-          setState(res.data);
-        });
+      getMessage();
     });
-  }, []);
-  useEffect(() => {
-    // const chatRefresher = setInterval(() => {
-    //   axios
-    //     .post("http://localhost:9000/hndleMsg", {
-    //       lid: localStorage.getItem("lid"),
-    //       uname: uname,
-    //     })
-    //     .then((res) => {
-    //       setState(res.data);
-    //     });
-    // }, 800);
-    scrollToBottom();
-
     return () => {
-      // clearInterval(chatRefresher);
-      // localStorage.removeItem("fidOfChat");
-      // localStorage.removeItem("nameOfFriend");
-      // localStorage.removeItem("uname");
-      // localStorage.removeItem("profile");
+      socket.off("recieve_msg", getMessage);
     };
-  }, [state]);
-  function scrollToBottom() {
-    var chatBox = document.getElementById("chat-box-container");
-    chatBox.scrollTop = chatBox.scrollHeight;
-  }
+  }, []);
+
   const [form] = Form.useForm();
   return (
-    <ChartForm>
+    <ChartForm
+      style={{
+        minHeight: "calc(100vh -60px) !important",
+      }}
+    >
       <>
-        <Row style={{ background: "#f0f2f5", padding: "7px" }}>
-          <Link to={"/Uprofile/" + uname}>
-            <FcLeft style={{ paddingTop: "10px" }} size={50} />
-          </Link>
+        <Row style={{ background: "#f0f2f5", padding: "10px 16px" }}>
+          {/* <Link to={"/Uprofile/" + uname}>
+            <LuArrowLeftCircle style={{}} size={40} />
+          </Link> */}
           <Avatar
-            size={60}
-            src={
-              `http://localhost:9000/Uploads/` + localStorage.getItem("profile")
-            }
+            size={40}
+            src={`http://localhost:9000/Uploads/${friendProfile.imgname}`}
           />
           &nbsp;&nbsp;
-          <h2 style={{ padding: "10px" }}>
-            {capitalize(localStorage.getItem("nameOfFriend"))}
-          </h2>
-        </Row>{" "}
+          <h2 style={{}}>{capitalize(friendProfile.name)}</h2>
+        </Row>
       </>
       <div className="scrollbar newScroll" id="chat-box-container">
         {map(state, (item) => {
-          return (
-            <>
-              {item.sId !== toNumber(localStorage.getItem("lid")) ? (
-                <div
-                  style={{
-                    boxShadow: "1px 1px 2px  #e7e7e7 ",
-                    background: "#ffffff",
-                    margin: "2px 10px",
-                    padding: "6px 10px",
-                    maxWidth: "350px",
-                    width: "auto",
-                    borderRadius: "0px 10px 10px 10px",
-                  }}
-                >
-                  {item.CloneMsg}
-                </div>
-              ) : (
-                <div
-                  style={{
-                    background: "#d9fdd3",
-                    margin: "2px 10px",
-                    padding: "6px 10px",
-                    maxWidth: "100%",
-                    width: "350px",
-                    borderRadius: "0px 10px 10px 10px",
-                    marginLeft: "140px",
-                  }}
-                >
-                  {item.CloneMsg}
-                </div>
-              )}
-            </>
+          return item.sId !== toNumber(localStorage.getItem("lid")) ? (
+            <ChatMessageWithRightArrow
+              msg={item.CloneMsg}
+              createAt={item.createAt}
+            />
+          ) : (
+            <ChatMessageWithArrow
+              msg={item.CloneMsg}
+              createAt={item.createAt}
+            />
           );
         })}
       </div>
@@ -147,9 +117,8 @@ const Chat = () => {
       >
         <Row
           style={{
-            width: "100%",
-            padding: 8,
             gap: "8px",
+            height: 20,
           }}
         >
           <Col span={19}>

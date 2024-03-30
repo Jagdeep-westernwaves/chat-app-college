@@ -66,7 +66,6 @@ const Calander = () => {
 
   const reset = () => {
     setUserdetail([""]);
-    console.log(userdetail);
     setVisible(false);
   };
 

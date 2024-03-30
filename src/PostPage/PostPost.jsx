@@ -15,6 +15,8 @@ import {
 import { PostForm } from "../Style/Style";
 import axios from "axios";
 import { lastIndexOf, size } from "lodash";
+import useAPIClient from "../service/API/api-Client";
+import { getProfile } from "../service/API";
 const { Option } = Select;
 
 function getBase64(file) {
@@ -60,37 +62,12 @@ const PostPost = ({ getPosts }) => {
     }
   };
   async function getData() {
-    axios
-      .post(
-        `http://localhost:9000/profile`,
-
-        {
-          uname: sessionStorage.getItem("demo"),
-          token: localStorage.getItem("jwt"),
-        }
-      )
-
-      .then((res) => {
-        setUserdetail(res.data);
-      });
+    const data = await getProfile();
+    if (data) {
+      setUserdetail(data);
+    }
   }
   useEffect(() => {
-    async function getData() {
-      axios
-        .post(
-          `http://localhost:9000/profile`,
-
-          {
-            uname: localStorage.getItem("demo"),
-            token: localStorage.getItem("jwt"),
-          }
-        )
-
-        .then((res) => {
-          setUserdetail(res.data);
-        });
-    }
-
     getData();
   }, []);
   const onFinish = (values) => {

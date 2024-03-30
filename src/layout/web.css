@@ -50,7 +50,7 @@ img {
   width: 150px;
   height: 150px;
 }
-.ant-image-preview-img{
+.ant-image-preview-img {
   height: auto;
   width: auto;
 }
@@ -133,21 +133,19 @@ img {
 }
 
 .scrollbar {
-  margin-left: 30px;
-  float: left;
-  height: 80vh;
+  height: calc(100vh - 80px);
+  max-height: calc(100vh - 80px);
   background: #ffffff;
   overflow-y: auto;
   margin-left: 10px;
   padding-left: 15px;
-  margin-bottom: 25px;
+  padding-right: 15px;
 }
 .newScroll {
-  height: 550px !important;
   background-color: transparent !important;
   margin-left: 0px !important;
   width: 100%;
-  margin-right: -5px !important;
+  /* margin-right: -5px !important; */
 }
 .scrollbar:hover {
   overflow-y: auto;

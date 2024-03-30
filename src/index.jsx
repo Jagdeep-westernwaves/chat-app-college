@@ -5,11 +5,14 @@ import "./index.css";
 import App from "./layout/App";
 import { BrowserRouter } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
+import { SocketProvider } from "./context/SocketProvider";
 
 ReactDOM.render(
   <BrowserRouter>
     <CookiesProvider>
-      <App />
+      <SocketProvider>
+        <App />
+      </SocketProvider>
     </CookiesProvider>
   </BrowserRouter>,
   document.getElementById("root")

@@ -1,38 +1,34 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import FreindList from "./FreindList";
-
-import { NavLink } from "react-router-dom";
 import Confirm from "./Confirm";
-import {
-  Row,
-  Col,
-  Tag,
-  Avatar,
-  Button,
-  Table,
-  Input,
-  message,
-  Image,
-} from "antd";
+import { Input } from "antd";
 import "../../layout/web.css";
 import { ModalForm } from "../../Style/Style";
-import { get, lowerCase, size } from "lodash";
+import _, { get, lowerCase } from "lodash";
+import { Grid, useMediaQuery } from "@mui/material";
+import UserListCard from "../../component/user-list-card";
+import { useSocket } from "../../context/SocketProvider";
+
 const ListLogs = () => {
+  const isSmallScreen = useMediaQuery("(max-width:600px)");
+  const socket = useSocket();
   const [roww, setroww] = useState([]);
-  const [test, settest] = useState(0);
   const [value, setValue] = useState("");
 
   localStorage.setItem("current", "Friends");
   const applyFilter = (e, data) => {
-    const filteredData = data.filter(
-      (entry) =>
-        lowerCase(entry.name).includes(lowerCase(e)) ||
-        lowerCase(entry.uname).includes(lowerCase(e)) ||
-        lowerCase(entry.mno).includes(lowerCase(e))
-    );
-    console.log("✌️filteredData --->", filteredData);
-    setroww(e !== "" ? filteredData : data);
+    if (e) {
+      const filteredData = data.filter(
+        (entry) =>
+          lowerCase(entry.name).includes(lowerCase(e)) ||
+          lowerCase(entry.uname).includes(lowerCase(e)) ||
+          lowerCase(entry.mno).includes(lowerCase(e))
+      );
+      setroww(filteredData);
+    } else {
+      setroww(data);
+    }
   };
   const getAllLogs = () => {
     axios
@@ -52,222 +48,64 @@ const ListLogs = () => {
       });
   };
 
-  const confirmuser = async (valuess) => {
-    console.log(valuess);
-
-    axios
-      .post(
-        `http://localhost:9000/confirmfrnd`,
-
-        {
-          fid: localStorage.getItem("lid"),
-          lid: valuess.id,
-        }
-      )
-      .then((res) => {
-        console.log("removed");
-      });
-
-    settest(test + 1);
-  };
-
-  const adduser = (valuess) => {
-    console.log(valuess);
-
-    axios
-      .post(
-        `http://localhost:9000/addfrnd`,
-
-        {
-          fid: valuess.id,
-          lid: localStorage.getItem("lid"),
-        }
-      )
-      .then((res) => {
-        console.log("req sended");
-      });
-
-    settest(test + 1);
-    // window.location.reload(false);
-  };
-
-  const removeuser = (valuess) => {
-    console.log(valuess);
-
-    axios
-      .post(
-        `http://localhost:9000/removereq`,
-
-        {
-          fid: valuess.id,
-          lid: localStorage.getItem("lid"),
-        }
-      )
-      .then((res) => {
-        console.log("removed");
-      });
-    settest(test + 1);
-    // window.location.reload(false);
-  };
-
-  const dataLog = [];
-
-  const [dataSource, setDataSource] = useState(dataLog);
-
   useEffect(() => {
     getAllLogs();
-
-    const interval = setInterval(() => {
-      getAllLogs();
-    }, 5000);
-
-    return () => clearInterval(interval);
+    socket.on("recieve_request", () => getAllLogs());
+    return () => {
+      socket.off("recieve_request", () => getAllLogs());
+    };
   }, []);
 
-  useEffect(() => {
-    roww.map((items) => {
-      if (items.req === 1) {
-        dataLog.push({
-          key: items.id,
-          name: items.name,
-          uname: items.uname,
-          mno: items.mno,
-          Profile: (
-            <Avatar
-              size={50}
-              shape="circle"
-              src={`http://localhost:9000/uploads/${items.imgname}`}
-            />
-          ),
-          duname: (
-            <div>
-              {items.name} <br />
-              <Tag color="blue">{items.uname}</Tag>
-            </div>
-          ),
-          btn: (
-            <>
-              <Button onClick={() => removeuser(items)} danger>
-                Cancel Request
-              </Button>
-            </>
-          ),
-        });
-      } else if (items.req === 2) {
-        dataLog.push({
-          key: items.id,
-          name: items.name,
-          uname: items.uname,
-          mno: items.mno,
-          Profile: (
-            <Avatar
-              size={50}
-              shape="circle"
-              src={`http://localhost:9000/uploads/${items.imgname}`}
-            />
-          ),
-          duname: (
-            <div>
-              {items.name} <br />
-              <Tag color="blue">{items.uname}</Tag>
-            </div>
-          ),
-          btn: (
-            <>
-              <Button onClick={() => confirmuser(items)}>Confirm</Button>
-            </>
-          ),
-        });
-      } else if (items.req === 0) {
-        dataLog.push({
-          key: items.id,
-          name: items.name,
-          uname: items.uname,
-          mno: items.mno,
-          Profile: (
-            <Avatar
-              size={50}
-              shape="circle"
-              src={`http://localhost:9000/uploads/${items.imgname}`}
-            />
-          ),
-          duname: (
-            <div>
-              {items.name} <br />
-              <Tag color="blue">{items.uname}</Tag>
-            </div>
-          ),
-          btn: (
-            <>
-              {" "}
-              <Button onClick={() => adduser(items)}>Add+</Button>
-            </>
-          ),
-        });
-      } else {
-        dataLog.push({
-          key: items.id,
-          name: items.name,
-          uname: items.uname,
-          mno: items.mno,
-          Profile: (
-            <Avatar
-              size={50}
-              shape="circle"
-              src={`http://localhost:9000/uploads/${items.imgname}`}
-            />
-          ),
-          duname: (
-            <div>
-              {items.name} <br />
-              <Tag color="blue">{items.uname}</Tag>
-            </div>
-          ),
-          btn: (
-            <>
-              <NavLink to={`/Uprofile/${items.uname}`}>
-                <Button success>View Profile</Button>
-              </NavLink>
-            </>
-          ),
-        });
-      }
-    });
-    setDataSource(dataLog);
-  }, [roww]);
-
-  const columns = [
-    {
-      title: "Profile",
-      dataIndex: "Profile",
-      key: "Profile",
-      width: 60,
-    },
-    {
-      title: "User",
-      dataIndex: "duname",
-      key: "duname",
-    },
-    { User: "", dataIndex: "btn", key: "btn" },
-  ];
-
   return (
-    <div style={{ marginTop: 10 }}>
-      <Row>
-        <Col span={8}>
-          <div className="scrollbar" id="style-1">
-            <Col span={23}>
-              <Row>
+    <div style={{}}>
+      <Grid container>
+        <Grid item lg={4} md={6} sm={6} xs={12}>
+          <div
+            className={isSmallScreen ? "" : "scrollbar"}
+            id="style-1"
+            style={{
+              background: "transparent",
+              margin: 0,
+              maxWidth: "calc(100vw - 5px)",
+              maxHeight: "calc(100vh - 70px)",
+              padding: 0,
+            }}
+          >
+            <Grid
+              item
+              lg={12}
+              sx={{
+                px: "10px",
+              }}
+            >
+              <Grid container>
                 <Confirm />
-              </Row>
-              <Row>
+              </Grid>
+              <Grid container>
                 <FreindList />
-              </Row>
-            </Col>
+              </Grid>
+            </Grid>
           </div>
-        </Col>
-        <Col span={15}>
-          <ModalForm>
+        </Grid>
+        <Grid
+          item
+          lg={8}
+          md={6}
+          sm={6}
+          xs={12}
+          sx={{
+            maxHeight: isSmallScreen ? "" : "calc(100vh - 70px)",
+            overflow: isSmallScreen ? "" : "scroll",
+            p: "10px",
+          }}
+        >
+          <ModalForm
+            style={{
+              height: "auto",
+              padding: "24px 40px",
+              margin: "10px 0",
+            }}
+          >
             <div>
               <header>
                 <h1> Search User </h1>
@@ -282,17 +120,11 @@ const ListLogs = () => {
                   applyFilter(e.target.value, roww);
                 }}
               />
-              <Table
-                bordered
-                columns={columns}
-                dataSource={dataSource}
-                size="small"
-                pagination={false}
-              />
+              <UserListCard data={roww} />
             </div>
           </ModalForm>
-        </Col>
-      </Row>
+        </Grid>
+      </Grid>
     </div>
   );
 };

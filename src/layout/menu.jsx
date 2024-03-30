@@ -22,7 +22,7 @@ const Menus = () => {
 
   const logout = () => {
     localStorage.removeItem("demo");
-    localStorage.removeItem("jwt");
+    localStorage.removeItem("authToken");
     localStorage.removeItem("refjwt");
     history.push("/");
     window.location.reload(false);
