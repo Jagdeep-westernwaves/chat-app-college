@@ -3,6 +3,7 @@ import { Avatar, Tooltip } from "antd";
 import { size } from "lodash";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import React, { useState } from "react";
+import { FiExternalLink } from "react-icons/fi";
 import { FaUserCheck, FaUserClock, FaUserPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { TbMessages } from "react-icons/tb";
@@ -106,28 +107,47 @@ const MapBody = ({ i = {}, req }) => {
             }}
           >
             {isHovered && (
-              <Tooltip title={isCopied ? "User Name copied!" : i.uname}>
-                <IconButton
-                  onClick={() => {
-                    var textField = document.createElement("textarea");
-                    textField.innerText = i.uname;
-                    document.body.appendChild(textField);
-                    textField.select();
-                    document.execCommand("copy");
-                    textField.remove();
-                    setIsCopied(true);
-                    setTimeout(() => {
-                      setIsCopied(false);
-                    }, 800);
-                  }}
-                >
-                  <MdCopyAll
-                    style={{
-                      cursor: "pointer",
+              <>
+                <Tooltip title={`Go to ${i.name}'s profile`}>
+                  <a
+                    href={`profile/${i.uname}`}
+                    rel="noreferrer"
+                    target="_blank"
+                    style={{ color: "#272727" }}
+                  >
+                    <IconButton onClick={() => {}}>
+                      <FiExternalLink
+                        size={"23px"}
+                        style={{
+                          cursor: "pointer",
+                        }}
+                      />
+                    </IconButton>
+                  </a>
+                </Tooltip>
+                <Tooltip title={isCopied ? "User Name copied!" : i.uname}>
+                  <IconButton
+                    onClick={() => {
+                      var textField = document.createElement("textarea");
+                      textField.innerText = i.uname;
+                      document.body.appendChild(textField);
+                      textField.select();
+                      document.execCommand("copy");
+                      textField.remove();
+                      setIsCopied(true);
+                      setTimeout(() => {
+                        setIsCopied(false);
+                      }, 800);
                     }}
-                  />
-                </IconButton>
-              </Tooltip>
+                  >
+                    <MdCopyAll
+                      style={{
+                        cursor: "pointer",
+                      }}
+                    />
+                  </IconButton>
+                </Tooltip>
+              </>
             )}
           </Box>
         </Grid>

@@ -21,7 +21,6 @@ const Chat = () => {
   const getFriendProfile = async () => {
     const res = await getProfile();
     if (res) {
-      console.log("✌️res --->", res);
       setFriendProfile(res);
     }
   };
@@ -50,7 +49,6 @@ const Chat = () => {
       .then((res) => {
         setState(res.data);
         getMessage();
-        socket.emit("send_msg");
         // socket.emit("send_msg");
       });
     form.resetFields();
@@ -63,11 +61,17 @@ const Chat = () => {
   useEffect(() => {
     getFriendProfile();
     getMessage();
-    socket.on("recieve_msg", () => {
+    const receiveMsgHandler = (socket) => {
       getMessage();
-    });
+    };
+    socket.on(`recieve_msg_${localStorage.getItem("demo")}`, receiveMsgHandler);
+
+    // Cleanup function to remove the event listener
     return () => {
-      socket.off("recieve_msg", getMessage);
+      socket.off(
+        `recieve_msg_${localStorage.getItem("demo")}`,
+        receiveMsgHandler
+      );
     };
   }, []);
 
@@ -80,7 +84,7 @@ const Chat = () => {
     >
       <>
         <Row style={{ background: "#f0f2f5", padding: "10px 16px" }}>
-          {/* <Link to={"/Uprofile/" + uname}>
+          {/* <Link to={"/profile/" + uname}>
             <LuArrowLeftCircle style={{}} size={40} />
           </Link> */}
           <Avatar

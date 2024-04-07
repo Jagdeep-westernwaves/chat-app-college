@@ -28,9 +28,9 @@ const PostList = (props) => {
                       />
                       &nbsp;&nbsp;
                       <a
-                        href={`Uprofile/${item.uname}`}
-                        target="_blank"
+                        href={`profile/${item.uname}`}
                         rel="noreferrer"
+                        style={{ color: "#272727" }}
                       >
                         {item.uname}
                       </a>

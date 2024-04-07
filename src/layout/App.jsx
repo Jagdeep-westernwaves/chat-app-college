@@ -22,6 +22,12 @@ import { ToastContainer } from "react-toastify";
 const App = () => {
   useEffect(() => {
     localStorage.setItem("current", "Home");
+    if (
+      !localStorage.getItem("authToken") &&
+      window.location.pathname !== "/"
+    ) {
+      window.location.replace("/");
+    }
   }, []);
   return (
     <>
@@ -44,11 +50,10 @@ const App = () => {
               <Route path="/CatProduct/:Catname" component={CatProduct} />
               <Route exact path="/chat/:uname" component={Chat} />
               <Route exact path="/call/:uname" component={RoomPage} />
-              <Route path="/Uprofile/:fname" component={Uprofile} />
+              <Route path="/profile/:fname" component={Profile} />
               <Route path="/user/:fname" component={User} />
               <Route path="/forget-password" component={Profilepage} />
               <Route path="/friends" component={SearchPenal} />
-              <Route path="/profile" component={Profile} />
               <Route component={Error} />
             </Switch>
           </Box>

@@ -44,7 +44,6 @@ const Profile = () => {
                 src={`http://localhost:9000/uploads/${userdetail.imgname}`}
               />
               <Row>
-                {" "}
                 <label className="profilelable">User Name: </label>
                 <br />
                 <label className="profilename">{userdetail.uname}</label>
@@ -56,26 +55,22 @@ const Profile = () => {
               <span className="form-heading">Profile Information</span>
             </Row>
             <Row>
-              {" "}
               <label className="form-Lable">Name: {userdetail.name} </label>
             </Row>
             <Row>
               <label className="form-Lable">Email: {userdetail.email}</label>
             </Row>
             <Row>
-              {" "}
               <label className="form-Lable">
                 Phone Number: {userdetail.mno}
               </label>
             </Row>
             <Row>
-              {" "}
               <label className="form-Lable">Bio: {userdetail.bio}</label>
             </Row>
 
             <Row>
               <Col span={12}>
-                {" "}
                 <Link to={"/chat/" + userdetail.uname} className="form-button">
                   Message Now
                 </Link>

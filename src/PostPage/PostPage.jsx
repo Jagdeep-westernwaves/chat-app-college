@@ -3,16 +3,14 @@ import { get } from "lodash";
 import React, { useEffect, useState } from "react";
 import PostList from "./PostList";
 import PostPost from "./PostPost";
+import { callGetPosts } from "../service/API";
 
 const PostPage = () => {
   const [state, setState] = useState([]);
   const getPosts = () => {
-    axios
-      .post(`http://localhost:9000/getposts`, {
-        userId: localStorage.getItem("lid"),
-      })
+    callGetPosts()
       .then((res) => {
-        setState(get(res, "data", []));
+        setState(res);
       })
       .catch((e) => {
         console.log(e);

@@ -81,7 +81,9 @@ const Menus = () => {
               {localStorage.getItem("demo") ? (
                 <SubMenu key="SubMenu" title={uname}>
                   <Menu.Item key="profile">
-                    <NavLink to={`/profile`}>Profile</NavLink>
+                    <NavLink to={`/profile/${localStorage.getItem("demo")}`}>
+                      Profile
+                    </NavLink>
                   </Menu.Item>
                   <Menu.Item key="Logout">
                     <NavLink to={`/`} onClick={logout}>

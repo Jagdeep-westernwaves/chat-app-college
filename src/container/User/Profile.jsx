@@ -11,15 +11,15 @@ import {
   Form,
   Progress,
 } from "antd";
-import { ProfileForm, ModalForm } from "../../Style/Style";
+import { ModalForm } from "../../Style/Style";
 import UserProfile from "./profiles";
 import axios from "axios";
-import useAPIClient from "../../service/API/api-Client";
 import { getProfile } from "../../service/API";
+import { useParams } from "react-router-dom";
 
 const { TextArea } = Input;
 const Profile = () => {
-  const apiClient = useAPIClient();
+  const { fname } = useParams();
   const [visible, setVisible] = useState(false);
   const [userdetail, setUserdetail] = useState([]);
   const [defaultFileList, setDefaultFileList] = useState([]);
@@ -66,7 +66,7 @@ const Profile = () => {
   };
   useEffect(() => {
     async function getData() {
-      const data = await getProfile();
+      const data = await getProfile(fname);
       if (data) {
         setUserdetail(data);
       }
@@ -101,60 +101,6 @@ const Profile = () => {
   };
   return (
     <>
-      {/* <ProfileForm>
-        <Row>
-          <Col span={8}>
-            <div>
-              <Avatar
-                size={200}
-                shape="square"
-                // src={`http://localhost:9000/uploads/${userdetail.imgname}`}
-                src={`http://localhost:9000/uploads/default.png`}
-              />
-              <Row>
-                {" "}
-                <label className="profilelable">User Name: </label>
-                <br />
-                <label className="profilename">{userdetail.uname}</label>
-              </Row>
-            </div>
-          </Col>
-          <Col span={16}>
-            <Row>
-              <span className="form-heading">Profile Information</span>
-            </Row>
-            <Row>
-              {" "}
-              <label className="form-Lable">Name: {userdetail.name} </label>
-            </Row>
-            <Row>
-              <label className="form-Lable">Email: {userdetail.email}</label>
-            </Row>
-            <Row>
-              {" "}
-              <label className="form-Lable">
-                Phone Number: {userdetail.mno}
-              </label>
-            </Row>
-            <Row>
-              {" "}
-              <label className="form-Lable">Bio: {userdetail.bio}</label>
-            </Row>
-
-            <Row>
-              <Col span={12}>
-                <Button
-                  className="form-button"
-                  onClick={() => setVisible(true)}
-                >
-                  Modify Details
-                </Button>
-              </Col>
-              <Col span={12}></Col>
-            </Row>
-          </Col>
-        </Row>
-      </ProfileForm> */}
       <UserProfile profile_data={userdetail} />
       <Modal
         title="Update Profile"

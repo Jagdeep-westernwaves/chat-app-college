@@ -53,25 +53,7 @@ export default function useAPIClient() {
     return reqHandler({ url, data, enableFlashMessage, method: "POST" });
   };
   const get = async (url, { enableFlashMessage = true } = {}) => {
-    try {
-      const res = await axios({
-        baseURL: process.env.REACT_APP_BASE_URL,
-        headers,
-        method: "GET",
-        url,
-        data,
-      });
-      if (enableFlashMessage) {
-        flashMessage({ message: res.data.message, status: res.data.status });
-      }
-      return res.data;
-    } catch (err) {
-      const data = err?.response?.data;
-      if (enableFlashMessage) {
-        flashMessage({ message: data?.message, status: data?.status });
-      }
-      return { error: true, data };
-    }
+    return reqHandler({ url, data: {}, enableFlashMessage, method: "GET" });
   };
   const put = async (url, data = {}, { enableFlashMessage = true } = {}) => {
     try {

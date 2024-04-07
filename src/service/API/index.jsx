@@ -48,3 +48,11 @@ export const callSendreq = (body = {}) =>
       myReject(error);
     }
   });
+export const callGetPosts = () =>
+  new Promise(function (myResolve, myReject) {
+    try {
+      myResolve(apiClient.get("/getposts"));
+    } catch (error) {
+      myReject(error);
+    }
+  });

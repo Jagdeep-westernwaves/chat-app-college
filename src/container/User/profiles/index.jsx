@@ -1,5 +1,3 @@
-/* eslint-disable array-callback-return */
-/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Divider,
   Grid,
@@ -8,18 +6,11 @@ import {
   Typography,
   styled,
 } from "@mui/material";
-// import {
-//   getMFAStatus,
-//   getProfileApi,
-//   mfaSettings,
-//   resetRedux,
-//   updatePassword,
-//   updateTimezone,
-//   updateUserProfile,
-// } from "./action";
 import LeftProfileCard from "./profile-card";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import { get, size } from "lodash";
+import PostList from "../../../PostPage/PostList";
 export const MaterialUISwitch = styled(Switch)(({ theme, checked }) => {
   return {
     width: 53,
@@ -75,18 +66,8 @@ const UserProfile = ({
   profile_data = {},
   callUpdateUser = () => {},
 }) => {
-  const { t } = useTranslation();
+  const [state, setState] = useState(get(profile_data, "posts", []));
   const matchesXs = false;
-
-  // useEffect(() => {
-  //     if (isChecked) {
-  //         setTimeout(() => {
-  //             setisCompleted(true);
-  //         }, 1500);
-  //     } else {
-  //         setisCompleted(false);
-  //     }
-  // }, [isChecked]);
   return (
     <Grid
       container
@@ -137,16 +118,23 @@ const UserProfile = ({
           backgroundColor: "transparant",
           width: "100%",
           p: 1,
-          // height: "80vh",
-          // minHeight: "80vh",
           ml: !matchesXs ? 2 : 0,
-          overflow: "hidden",
+          overflow: "scroll",
+          maxHeight: "calc(100vh - 100px)",
         }}
         xs={12}
         md={7}
         lg={6}
       >
-        <Grid
+        {size(get(profile_data, "posts", [])) > 0 ? (
+          <PostList
+            state={get(profile_data, "posts", [])}
+            setState={setState}
+          />
+        ) : (
+          ""
+        )}
+        {/* <Grid
           sx={{
             backgroundColor: "#fff",
             width: "100%",
@@ -359,7 +347,7 @@ const UserProfile = ({
               </IconButton>
             </Grid>
           </Grid>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Grid>
   );
