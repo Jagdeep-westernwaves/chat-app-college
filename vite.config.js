@@ -22,9 +22,9 @@ export default defineConfig({
     },
   },
   build: {
-    commonjsOptions: {
-      include: [],
-    },
+    // commonjsOptions: {
+    //   include: [],
+    // },
     outDir: "build",
   },
   optimizeDeps: {
